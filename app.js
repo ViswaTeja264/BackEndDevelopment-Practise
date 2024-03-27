@@ -1,5 +1,19 @@
-const lodash = require('lodash');
+const http = require('http');
+const fs = require('fs');
 
-const items = [1, [2, [3, [4]]]];
-const newItems = lodash.flattenDeep(items);
-console.log(newItems);
+const server = http.createServer((req, res) => {
+    // const text = fs.readFileSync('./Content/BigFile.txt', 'utf8');
+    // res.end(text);
+
+    const fileStream = fs.createReadStream('./Content/BigFile.txt', 'utf8');
+    fileStream.on('open', () => {
+        fileStream.pipe(res);
+    });
+    fileStream.on('error', (error) => {
+        res.end(error);
+    })
+});
+
+server.listen(5000, () => {
+    console.log('Server Is Running On Port: 5000');
+})
