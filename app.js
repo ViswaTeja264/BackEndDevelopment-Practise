@@ -5,6 +5,8 @@ const server = http.createServer((req, res) => {
     // const text = fs.readFileSync('./Content/BigFile.txt', 'utf8');
     // res.end(text);
 
+    console.log("Server is Running");
+
     const fileStream = fs.createReadStream('./Content/BigFile.txt', 'utf8');
     fileStream.on('open', () => {
         fileStream.pipe(res);
